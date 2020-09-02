@@ -84,7 +84,7 @@ class DataWriter():
                 # if the thread indicator variable is set (img is None), stop the thread
                 if self.save_video:
                     stream.release()
-                write_json(final_result, self.opt.outputpath, form=self.opt.format, for_eval=self.opt.eval)
+#                 write_json(final_result, self.opt.outputpath, form=self.opt.format, for_eval=self.opt.eval)
                 print("Results have been written to json.")
                 return
             # image channel RGB->BGR
@@ -130,14 +130,14 @@ class DataWriter():
                     'imgname': im_name,
                     'result': _result
                 }
-
+                
 
                 if self.opt.pose_flow:
                     poseflow_result = self.pose_flow_wrapper.step(orig_img, result)
                     for i in range(len(poseflow_result)):
                         result['result'][i]['idx'] = poseflow_result[i]['idx']
-
-                final_result.append(result)
+                write_json(result, self.opt.outputpath, form=self.opt.format, for_eval=self.opt.eval)
+#                 final_result.append(result)
                 if self.opt.save_img or self.save_video or self.opt.vis:
                     if hm_data.size()[1] == 49:
                         from alphapose.utils.vis import vis_frame_dense as vis_frame

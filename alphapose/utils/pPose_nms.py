@@ -475,9 +475,10 @@ def write_json(all_results, outputpath, form=None, for_eval=False):
     '''
     json_results = []
     json_results_cmu = {}
-    for im_res in all_results:
-        im_name = im_res['imgname']
-        for human in im_res['result']:
+    im_res = all_results
+#     for im_res in all_results:
+    im_name = im_res['imgname']
+    for human in im_res['result']:
             keypoints = []
             result = {}
             if for_eval:
@@ -551,6 +552,6 @@ def write_json(all_results, outputpath, form=None, for_eval=False):
                 with open(os.path.join(outputpath,'sep-json',name.split('.')[0]+'.json'),'w') as json_file:
                     json_file.write(json.dumps(json_results_cmu[name]))
     else:
-        with open(os.path.join(outputpath,'alphapose-results.json'), 'w') as json_file:
+        with open(os.path.join(outputpath,im_res['imgname'].split(".jpg")[0]+'_keypoints.json'), 'w') as json_file:
             json_file.write(json.dumps(json_results))
 
